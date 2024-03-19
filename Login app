@@ -6,8 +6,6 @@ accordingly i.e. “Correct username and password” if username and password ma
 “Incorrect username/password” if username and password do not match.
 
 
-
-
 activity_main.xml
 
 <?xml version="1.0" encoding="utf-8"?>
