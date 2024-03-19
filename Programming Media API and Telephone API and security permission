@@ -1,0 +1,73 @@
+Activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".MainActivity">
+<VideoView
+android:id="@+id/videoView"
+android:layout_width="wrap_content"oplk
+android:layout_height="wrap_content" />
+<Button
+android:id="@+id/btnPlay"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_alignParentEnd="true"
+android:layout_alignParentRight="true"
+android:layout_alignParentBottom="true"
+android:layout_marginEnd="151dp"
+android:layout_marginRight="151dp"
+android:layout_marginBottom="274dp"
+android:onClick="playVideo"
+android:text="Play Video" />
+</RelativeLayout>
+
+
+
+
+Main_Activity.java:
+
+
+package com.exapmle.pract11;
+import androidx.appcompat.app.AppCompatActivity;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.MediaController;
+import android.widget.Toast;
+import android.widget.VideoView;
+public class MainActivity extends AppCompatActivity {
+VideoView videoview;
+Button btn;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main);
+}
+public void playVideo(View view)
+{videoview = (VideoView) findViewById(R.id.videoView);
+try {
+MediaController mediacontroller = new MediaController(MainActivity.this);
+mediacontroller.setAnchorView(videoview);
+Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" +
+R.raw.myvideo);
+videoview.setMediaController(mediacontroller);
+videoview.setVideoURI(uri);}
+catch (Exception e) {
+Log.e("Error", e.getMessage());
+e.printStackTrace();
+}
+videoview.requestFocus();
+videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+public void onPrepared(MediaPlayer mp) {
+videoview.start();
+}});
+}}
