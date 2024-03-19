@@ -1,0 +1,276 @@
+A. Services
+
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <EditText
+ android:id="@+id/txt1"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignParentTop="true"
+ android:layout_centerHorizontal="true"
+ android:layout_marginTop="132dp"
+ android:ems="10"
+ android:inputType="textPersonName"
+ android:hint="Enter Data" />
+ <Button
+ android:id="@+id/btn1"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_centerInParent="true"
+ android:text="Send" />
+</RelativeLayout>
+
+
+activity_data_receive.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".Data_Receive">
+ <TextView
+ android:id="@+id/tv1"
+ android:layout_width="100dp"
+ android:layout_height="50dp"
+ android:layout_alignParentStart="true"
+ android:layout_alignParentLeft="true"
+android:layout_alignParentTop="true"
+ android:layout_alignParentEnd="true"
+ android:layout_alignParentRight="true"
+ android:layout_marginStart="152dp"
+ android:layout_marginLeft="152dp"
+ android:layout_marginTop="161dp"
+ android:layout_marginEnd="132dp"
+ android:layout_marginRight="132dp" />
+</RelativeLayout>
+
+
+Data_Receive.java
+
+package com.example.myapplication;
+//package com.org.datapass.datapass;
+import android.content.Intent;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.TextView;
+public class Data_Receive extends AppCompatActivity {
+ TextView t1;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_data_receive);
+ t1=(TextView)findViewById(R.id.tv1);
+ Intent intent=getIntent();
+ String data=intent.getStringExtra("data");
+ t1.setText(data);
+ }
+}
+
+
+MainActivity.java
+
+package com.example.myapplication;
+import android.content.Intent;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+public class MainActivity extends AppCompatActivity {
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ }
+ public void startService(View view){
+ Intent intent = new Intent(this, MyServices.class);
+ startService(intent);
+ }
+ public void stopService(View view){
+ Intent intent = new Intent(this, MyServices.class);
+ stopService(intent);
+ }
+}
+
+
+B. Notification
+
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <Button
+ android:id="@+id/btn_noti"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_centerInParent="true"
+ android:onClick="displayNotification"
+ android:text="Notify"
+ app:layout_constraintBottom_toBottomOf="parent"
+ app:layout_constraintEnd_toEndOf="parent"
+ app:layout_constraintStart_toStartOf="parent"
+ app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+MainActivity.java
+
+package com.example.myapplication;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Bundle;
+import android.os.Build;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import java.nio.channels.Channel;
+public class MainActivity extends AppCompatActivity {
+ public final String CHANNEL_ID="personal_notification";
+public final int NOTIFICATION_ID=001;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ }
+ public void displayNotification(View view) {
+ createNotificationChannel();
+ Toast.makeText(getApplicationContext(), "HI", Toast.LENGTH_LONG).show();
+ NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
+CHANNEL_ID);
+ builder.setSmallIcon(R.mipmap.ic_launcher);
+ builder.setContentTitle("Notification form Raj Singh");
+ builder.setContentText("Small Notification");
+ builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+ NotificationManagerCompat notificationManagerCompat =
+NotificationManagerCompat.from(this);
+ notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+ }
+ private void createNotificationChannel() {
+ if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
+ CharSequence name = "Personal Notification";
+ String description = "This is description";
+ int importance = NotificationManager.IMPORTANCE_DEFAULT;
+ NotificationChannel notificationChannel = new
+NotificationChannel(CHANNEL_ID, name, importance);
+ notificationChannel.setDescription(description);
+ NotificationManager notificationManager =
+(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+ notificationManager.createNotificationChannel(notificationChannel);
+ }
+ }
+}
+
+
+C. Broadcast receivers
+
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+<TextView
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="No Incoming Numbers"
+ android:id="@+id/txtmsg"
+ app:layout_constraintBottom_toBottomOf="parent"
+ app:layout_constraintLeft_toLeftOf="parent"
+ app:layout_constraintRight_toRightOf="parent"
+ app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+AndroidManifest.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+ package="com.example.myapplication">
+ <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+ <application
+ android:allowBackup="true"
+ android:icon="@mipmap/ic_launcher"
+ android:label="@string/app_name"
+ android:roundIcon="@mipmap/ic_launcher_round"
+ android:supportsRtl="true"
+ android:theme="@style/Theme.MyApplication">
+ <activity
+ android:name=".MainActivity"
+ android:exported="true">
+ <intent-filter>
+ <action android:name="android.intent.action.MAIN" />
+ <category android:name="android.intent.category.LAUNCHER" />
+ </intent-filter>
+ </activity>
+ <receiver android:name=".NumberReceiver"
+ android:exported="false">
+ <intent-filter>
+ <action android:name="android.intent.action.PHONE_STATE"></action>
+ </intent-filter>
+ </receiver>
+ </application>
+</manifest>
+
+NumberReceiver.java
+
+package com.example.myapplication;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.telephony.TelephonyManager;
+public class NumberReceiver extends BroadcastReceiver {
+ static String allnumber="";
+ @Override
+ public void onReceive(Context context, Intent intent){
+ String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
+ if(state.equals(TelephonyManager.EXTRA_STATE_RINGING)){
+ String number =
+intent.getExtras().getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+ allnumber = allnumber + "\n" + number;
+ MainActivity.getInstance().myMethod(allnumber);
+ }
+ }
+}
+
+
+MainActivity.java
+
+package com.example.myapplication;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.TextView;
+public class MainActivity extends AppCompatActivity {
+ TextView textView;
+ private static MainActivity instance;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ instance = this;
+ }
+ public static MainActivity getInstance(){
+ return instance;
+ }
+ public void myMethod(String str){
+ textView=(TextView) findViewById(R.id.txtmsg);
+ textView.setText(str);
+ }
+}
