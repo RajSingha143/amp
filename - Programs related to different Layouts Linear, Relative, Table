@@ -1,0 +1,114 @@
+● Linearlayout
+
+MainActivity.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" tools:context=".MainActivity" >
+<EditText android:layout_width =
+"wrap_content" android:layout_height =
+"86dp" android:id = "@+id/editText"
+android:hint = "Enter the Text"
+android:ems="10"
+android:layout_weight="1"
+android:text="Type Here"
+android:inputType="textPersonName"
+android:textColor="#FFEB3B"
+/>
+<Button android:id="@+id/button"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:text="Button" />
+<TextView android:id="@+id/textView2"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:text="TextView" />
+<TextView android:id="@+id/textView3"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content" 
+android:layout_weight="1"
+android:text="TextView" />
+<TextView android:id="@+id/textView4"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:text="TextView" /> </LinearLayout>
+
+● Relative Layout
+
+Activity.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent" 
+android:layout_height="match_parent" android:orientation="vertical"
+tools:context=".MainActivity">
+<EditText android:id="@+id/name"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Enter Text Here" />
+<Spinner android:id="@+id/dates"
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_below="@id/name"
+android:layout_alignParentLeft="true"
+android:layout_toLeftOf="@+id/times" />
+<Spinner android:id="@id/times"
+android:layout_width="96dp"
+android:layout_height="wrap_content"
+android:layout_below="@id/name"
+android:layout_alignParentRight="true" />
+<Button android:layout_width="96dp"
+android:layout_height="wrap_content"
+android:layout_below="@id/times"
+android:layout_alignParentRight="true"
+android:text="Click Here" />
+</RelativeLayout> 
+
+● Table Layout
+
+MainActivity.xml
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent" android:layout_height="match_parent"
+android:stretchColumns="1" tools:context=".MainActivity" >
+<TableRow
+android:layout_width="match_parent"
+android:layout_height="match_parent" >
+<TextView
+android:id="@+id/textView4"
+android:layout_width="255dp"
+android:layout_height="56dp"
+android:padding="3dp"
+android:text="Row1,Col1" /> 
+<TextView android:id="@+id/textView5"
+android:layout_width="wrap_content"
+android:layout_height="match_parent
+" android:padding="3dp"
+android:gravity="right"
+android:text="Row1,Col2" />
+</TableRow>
+<TableRow
+android:layout_width="match_parent"
+android:layout_height="match_parent" >
+<TextView
+android:id="@+id/textView6"
+android:layout_width="242dp"
+android:layout_height="64dp"
+android:padding="3dp"
+android:text="Row2,Col1" />
+<TextView
+android:id="@+id/textView7"
+android:layout_width="wrap_content"
+android:layout_height="match_parent" 
+android:gravity="right"
+android:padding="3dp"
+android:text="Row2,Col2" /> 
+</TableRow> </TableLayout> 
